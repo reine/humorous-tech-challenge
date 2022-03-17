@@ -1,5 +1,9 @@
 <?php
 
+// Define environment-specific configurations
+$environment    = getenv('YII_ENV');
+$debug_mode     = getenv('YII_DEBUG');
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -69,20 +73,21 @@ $config = [
     'params' => $params,
 ];
 
-if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
-    ];
+if ($environment == 'dev')
+{
+    if ($debug_mode == 'true')
+    {
+        $config['bootstrap'][] = 'debug';
+        $config['modules']['debug'] = [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => ['*'],
+        ];
+    }
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 }
 
