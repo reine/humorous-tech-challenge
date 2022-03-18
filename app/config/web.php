@@ -73,6 +73,7 @@ $config = [
     'params' => $params,
 ];
 
+// Configuration adjustments for the 'dev' environment
 if ($environment == 'dev')
 {
     if ($debug_mode == 'true')
